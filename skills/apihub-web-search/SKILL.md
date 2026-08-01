@@ -5,21 +5,21 @@ description: Web search via apihub /v1/search using Tavily / Exa / Brave / Serpe
 
 # apihub — Web Search
 
-Requires `NINEROUTER_URL` (and `NINEROUTER_KEY` if auth enabled). See https://raw.githubusercontent.com/decolua/apihub/refs/heads/master/skills/apihub/SKILL.md for setup.
+Requires `APIHUB_URL` (and `APIHUB_KEY` if auth enabled). See https://raw.githubusercontent.com/Gaoyubao0917/apihub/refs/heads/main/skills/apihub/SKILL.md for setup.
 
 ## Discover
 
 ```bash
-curl $NINEROUTER_URL/v1/models/web | jq '.data[] | select(.kind=="webSearch") | .id'
+curl $APIHUB_URL/v1/models/web | jq '.data[] | select(.kind=="webSearch") | .id'
 # Per-provider params (searchTypes, maxResults, required options like cx for google-pse)
-curl "$NINEROUTER_URL/v1/models/info?id=tavily/search"
+curl "$APIHUB_URL/v1/models/info?id=tavily/search"
 ```
 
 IDs end in `/search` (e.g. `tavily/search`). Combos (`owned_by:"combo"`) chain providers with auto-fallback.
 
 ## Endpoint
 
-`POST $NINEROUTER_URL/v1/search`
+`POST $APIHUB_URL/v1/search`
 
 | Field | Required | Notes |
 |---|---|---|
@@ -32,8 +32,8 @@ IDs end in `/search` (e.g. `tavily/search`). Combos (`owned_by:"combo"`) chain p
 ## Examples
 
 ```bash
-curl -X POST $NINEROUTER_URL/v1/search \
-  -H "Authorization: Bearer $NINEROUTER_KEY" \
+curl -X POST $APIHUB_URL/v1/search \
+  -H "Authorization: Bearer $APIHUB_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"tavily","query":"apihub open source","max_results":5}'
 ```
@@ -41,9 +41,9 @@ curl -X POST $NINEROUTER_URL/v1/search \
 JS:
 
 ```js
-const r = await fetch(`${process.env.NINEROUTER_URL}/v1/search`, {
+const r = await fetch(`${process.env.APIHUB_URL}/v1/search`, {
   method: "POST",
-  headers: { "Authorization": `Bearer ${process.env.NINEROUTER_KEY}`, "Content-Type": "application/json" },
+  headers: { "Authorization": `Bearer ${process.env.APIHUB_KEY}`, "Content-Type": "application/json" },
   body: JSON.stringify({ model: "search-combo", query: "latest LLM benchmarks", max_results: 10 }),
 });
 console.log(await r.json());
