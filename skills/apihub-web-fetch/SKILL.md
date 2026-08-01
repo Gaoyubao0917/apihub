@@ -5,21 +5,21 @@ description: Fetch URL → markdown / text / HTML via apihub /v1/web/fetch using
 
 # apihub — Web Fetch
 
-Requires `NINEROUTER_URL` (and `NINEROUTER_KEY` if auth enabled). See https://raw.githubusercontent.com/decolua/apihub/refs/heads/master/skills/apihub/SKILL.md for setup.
+Requires `APIHUB_URL` (and `APIHUB_KEY` if auth enabled). See https://raw.githubusercontent.com/Gaoyubao0917/apihub/refs/heads/main/skills/apihub/SKILL.md for setup.
 
 ## Discover
 
 ```bash
-curl $NINEROUTER_URL/v1/models/web | jq '.data[] | select(.kind=="webFetch") | .id'
+curl $APIHUB_URL/v1/models/web | jq '.data[] | select(.kind=="webFetch") | .id'
 # Per-provider params
-curl "$NINEROUTER_URL/v1/models/info?id=firecrawl/fetch"
+curl "$APIHUB_URL/v1/models/info?id=firecrawl/fetch"
 ```
 
 IDs end in `/fetch` (e.g. `firecrawl/fetch`, `jina/fetch`). `fetch-combo` chains providers with auto-fallback.
 
 ## Endpoint
 
-`POST $NINEROUTER_URL/v1/web/fetch`
+`POST $APIHUB_URL/v1/web/fetch`
 
 | Field | Required | Notes |
 |---|---|---|
@@ -32,32 +32,32 @@ IDs end in `/fetch` (e.g. `firecrawl/fetch`, `jina/fetch`). `fetch-combo` chains
 
 ### Jina Reader
 ```bash
-curl -X POST $NINEROUTER_URL/v1/web/fetch \
-  -H "Authorization: Bearer $NINEROUTER_KEY" \
+curl -X POST $APIHUB_URL/v1/web/fetch \
+  -H "Authorization: Bearer $APIHUB_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"jina-reader","url":"https://apihub.com","format":"markdown"}'
 ```
 
 ### Exa
 ```bash
-curl -X POST $NINEROUTER_URL/v1/web/fetch \
-  -H "Authorization: Bearer $NINEROUTER_KEY" \
+curl -X POST $APIHUB_URL/v1/web/fetch \
+  -H "Authorization: Bearer $APIHUB_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"exa","url":"https://example.com","format":"markdown","max_characters":0}'
 ```
 
 ### Firecrawl
 ```bash
-curl -X POST $NINEROUTER_URL/v1/web/fetch \
-  -H "Authorization: Bearer $NINEROUTER_KEY" \
+curl -X POST $APIHUB_URL/v1/web/fetch \
+  -H "Authorization: Bearer $APIHUB_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"firecrawl","url":"https://example.com","format":"markdown","max_characters":0}'
 ```
 
 ### Tavily
 ```bash
-curl -X POST $NINEROUTER_URL/v1/web/fetch \
-  -H "Authorization: Bearer $NINEROUTER_KEY" \
+curl -X POST $APIHUB_URL/v1/web/fetch \
+  -H "Authorization: Bearer $APIHUB_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"tavily","url":"https://example.com","format":"markdown","max_characters":0}'
 ```
@@ -66,9 +66,9 @@ curl -X POST $NINEROUTER_URL/v1/web/fetch \
 JS:
 
 ```js
-const r = await fetch(`${process.env.NINEROUTER_URL}/v1/web/fetch`, {
+const r = await fetch(`${process.env.APIHUB_URL}/v1/web/fetch`, {
   method: "POST",
-  headers: { "Authorization": `Bearer ${process.env.NINEROUTER_KEY}`, "Content-Type": "application/json" },
+  headers: { "Authorization": `Bearer ${process.env.APIHUB_KEY}`, "Content-Type": "application/json" },
   body: JSON.stringify({ model: "fetch-combo", url: "https://example.com", format: "markdown", max_characters: 5000 }),
 });
 const { data } = await r.json();
