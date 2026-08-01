@@ -5,19 +5,19 @@ description: Generate images via apihub /v1/images/generations using OpenAI / Ge
 
 # apihub — Image Generation
 
-Requires `NINEROUTER_URL` (and `NINEROUTER_KEY` if auth enabled). See https://raw.githubusercontent.com/decolua/apihub/refs/heads/master/skills/apihub/SKILL.md for setup.
+Requires `APIHUB_URL` (and `APIHUB_KEY` if auth enabled). See https://raw.githubusercontent.com/Gaoyubao0917/apihub/refs/heads/main/skills/apihub/SKILL.md for setup.
 
 ## Discover
 
 ```bash
-curl $NINEROUTER_URL/v1/models/image | jq '.data[].id'
+curl $APIHUB_URL/v1/models/image | jq '.data[].id'
 # Per-model params/options (size enum, quality enum, capabilities like edit)
-curl "$NINEROUTER_URL/v1/models/info?id=openai/dall-e-3"
+curl "$APIHUB_URL/v1/models/info?id=openai/dall-e-3"
 ```
 
 ## Endpoint
 
-`POST $NINEROUTER_URL/v1/images/generations`
+`POST $APIHUB_URL/v1/images/generations`
 
 | Field | Required | Notes |
 |---|---|---|
@@ -35,8 +35,8 @@ Add query `?response_format=binary` to receive raw image bytes (handy for saving
 Save to file (binary):
 
 ```bash
-curl -X POST "$NINEROUTER_URL/v1/images/generations?response_format=binary" \
-  -H "Authorization: Bearer $NINEROUTER_KEY" \
+curl -X POST "$APIHUB_URL/v1/images/generations?response_format=binary" \
+  -H "Authorization: Bearer $APIHUB_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model":"gemini/gemini-3-pro-image-preview","prompt":"watercolor mountains at sunrise","size":"1024x1024"}' \
   --output out.png
@@ -45,9 +45,9 @@ curl -X POST "$NINEROUTER_URL/v1/images/generations?response_format=binary" \
 JS (URL response):
 
 ```js
-const r = await fetch(`${process.env.NINEROUTER_URL}/v1/images/generations`, {
+const r = await fetch(`${process.env.APIHUB_URL}/v1/images/generations`, {
   method: "POST",
-  headers: { "Authorization": `Bearer ${process.env.NINEROUTER_KEY}`, "Content-Type": "application/json" },
+  headers: { "Authorization": `Bearer ${process.env.APIHUB_KEY}`, "Content-Type": "application/json" },
   body: JSON.stringify({ model: "gemini/gemini-3-pro-image-preview", prompt: "neon city", size: "1024x1024" }),
 });
 const { data } = await r.json();
